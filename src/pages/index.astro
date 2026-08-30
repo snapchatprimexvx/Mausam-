@@ -506,6 +506,139 @@ import PersonaDashboard from '../components/PersonaDashboard.astro';
     });
   });
 
+  // --- Use My Current Location (Geolocation API) ---
+  const useMyLocationBtn = document.getElementById('use-my-location-btn');
+  const useMyLocationText = document.getElementById('use-my-location-text');
+
+  if (useMyLocationBtn) {
+    useMyLocationBtn.addEventListener('click', () => {
+      if (!navigator.geolocation) {
+        alert('Geolocation is not supported by your browser.');
+        return;
+      }
+
+      // Show loading state on button
+      if (useMyLocationText) useMyLocationText.textContent = 'Locating...';
+      useMyLocationBtn.classList.add('opacity-60');
+      useMyLocationBtn.setAttribute('disabled', 'true');
+
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          const lat = position.coords.latitude;
+          const lon = position.coords.longitude;
+          const coordsQuery = `${lat},${lon}`;
+          const key = 'current_location';
+
+          activeCity = key;
+          selectedLocation = { key, display: '' };
+          localStorage.setItem('mausam_city', key);
+          localStorage.removeItem('mausam_location_display');
+
+          if (locationSearchResults) locationSearchResults.classList.add('hidden');
+
+          if (heroLocation) heroLocation.textContent = 'Detecting location...';
+          if (heroTemp) heroTemp.textContent = '...';
+          if (heroCondition) heroCondition.textContent = 'Loading weather data...';
+
+          suppressInputEvent = true;
+          if (locationSearchInput) locationSearchInput.value = '';
+          suppressInputEvent = false;
+
+          // Single fetch using coordinates
+          try {
+            const resp = await fetch(`/api/weather?city=${key}&q=${encodeURIComponent(coordsQuery)}`);
+            if (!resp.ok) throw new Error('Weather fetch failed');
+            const data = await resp.json();
+            const displayName = `${data.location.name}, ${data.location.country}`;
+
+            // Update all location references
+            activeCity = key;
+            selectedLocation = { key, display: displayName };
+            localStorage.setItem('mausam_city', key);
+            localStorage.setItem('mausam_location_display', displayName);
+
+            if (locationSearchInput) locationSearchInput.value = displayName;
+            if (heroLocation) heroLocation.textContent = displayName;
+            if (heroTemp) heroTemp.textContent = `${data.current.temp_c}°C`;
+            if (heroCondition) heroCondition.textContent = data.current.condition.text;
+            if (heroHumidity) heroHumidity.textContent = `${data.current.humidity}%`;
+            if (heroWind) heroWind.textContent = `${data.current.wind_kph} kph ${data.current.wind_dir}`;
+
+            const uvLabel = data.current.uv >= 8 ? 'Very High' : data.current.uv >= 6 ? 'High' : 'Moderate';
+            if (heroUv) heroUv.textContent = `${data.current.uv} (${uvLabel})`;
+
+            if (heroPhoto) {
+              const conditionKey = data.current.condition.icon || 'default';
+              const fallbackUrl = WEATHER_FALLBACK_PHOTOS[conditionKey] || WEATHER_FALLBACK_PHOTOS['default'];
+              heroPhoto.style.backgroundImage = `url('${fallbackUrl}')`;
+            }
+
+            if (subNavCityDisplay) subNavCityDisplay.textContent = displayName;
+
+            // Update all persona cards
+            updateCardText('health-aqi-card', `${data.aqi.index} (${data.aqi.label})`, `PM2.5: ${data.aqi.pm25} µg/m³ | PM10: ${data.aqi.pm10} µg/m³`);
+            updateCardText('health-pollen-card', `Grass: ${data.pollen.grass}`, `Tree: ${data.pollen.tree} | Weed: ${data.pollen.weed}`);
+            updateCardText('health-uv-card', `UV Index: ${data.current.uv}`, data.current.uv >= 8 ? "Critical sun hazards. Wear sunscreen!" : "Moderate risk. Standard sunscreen advised.");
+            updateCardText('health-humidity-card', `${data.current.humidity}%`, data.current.humidity > 80 ? "Damp atmosphere, can trigger joint pain." : "Comfortable ambient humidity.");
+            updateCardText('fitness-hours-card', data.fitness.best_running_hours.join(' & '), "Optimal thermal periods today.");
+            updateCardText('fitness-sun-card', `Rise: ${data.fitness.sunrise}`, `Set: ${data.fitness.sunset}`);
+            updateCardText('fitness-wind-card', `${data.current.wind_kph} kph`, `Gusts from ${data.current.wind_dir}`);
+            updateCardText('fitness-heat-card', data.fitness.heat_alert ? "Caution Active" : "No Alerts", data.fitness.heat_alert ? "High risk of heat exhaustion." : "Temperature is safe for outdoor sprints.");
+            updateCardText('marine-sea-card', data.marine.sea_condition, `Wave Period: 8s`);
+            updateCardText('marine-wave-card', `${data.marine.wave_height_m}m`, "Significant swell height.");
+            updateCardText('marine-temp-card', `${data.marine.water_temp_c}°C`, "Sea surface temperature.");
+            const nextTide = data.marine.tide_timings.length > 0 ? `${data.marine.tide_timings[0].type} at ${data.marine.tide_timings[0].time}` : 'N/A';
+            updateCardText('marine-tide-card', nextTide, data.marine.tide_timings.map((t: any) => `${t.type}: ${t.time}`).join(' | '));
+            const destString = data.travel.saved_destinations.map((d: any) => `${d.name}: ${d.temp_c}°C`).join(' | ');
+            updateCardText('travel-saved-card', "Active Trackers", destString);
+            updateCardText('travel-flight-card', data.travel.flight_alerts.status, data.travel.flight_alerts.details);
+            updateCardText('travel-packing-card', "Luggage Tips", data.travel.packing_suggestions);
+            updateCardText('family-commute-card', "Commute Index", data.family.school_commute);
+            updateCardText('family-rain-card', "Rain Timeline", data.family.rain_alerts);
+            updateCardText('family-warning-card', "Severe Bulletins", data.family.severe_warning || "No severe warnings active.");
+            updateCardText('agri-moisture-card', `${data.agriculture.soil_moisture_pct}%`, "Current soil saturation (10cm depth).");
+            updateCardText('agri-rain-card', `${data.agriculture.rainfall_prediction_24h_mm} mm`, "Accumulated next 24 hours.");
+            updateCardText('agri-frost-card', data.agriculture.frost_alert ? "Frost Alert" : "No Frost Risk", data.agriculture.frost_alert ? "Cover high-value plants." : "Ground temperature safe.");
+            updateCardText('agri-planting-card', "Sowing Guide", data.agriculture.seasonal_planting_guidance);
+            updateCardText('commute-traffic-card', "Highway Index", data.commute.traffic_status);
+            updateCardText('commute-visibility-card', `${data.current.visibility_km} km`, data.commute.visibility_alert);
+            updateCardText('commute-storm-card', "Travel Alerts", data.commute.storm_fog_alert);
+            updateCardText('events-comfort-card', `${data.fitness.comfort_index}/100`, data.event_planner.extended_comfort);
+            updateCardText('events-rain-card', `${data.event_planner.rain_probability_pct}%`, "Precipitation probability during events.");
+            updateCardText('events-suitability-card', data.event_planner.rain_probability_pct > 50 ? "Indoor Backups advised" : "Outdoor Friendly", "Extended 12-hour gathering suitability.");
+
+            // Load AI suggestions for this location
+            loadAISuggestions(key, activePersona, displayName);
+
+          } catch (e) {
+            if (heroCondition) heroCondition.textContent = 'Failed to load weather. Try again.';
+          }
+
+          // Restore button state
+          if (useMyLocationText) useMyLocationText.textContent = 'Current Location';
+          useMyLocationBtn.classList.remove('opacity-60');
+          useMyLocationBtn.removeAttribute('disabled');
+        },
+        (error) => {
+          if (useMyLocationText) useMyLocationText.textContent = 'Current Location';
+          useMyLocationBtn.classList.remove('opacity-60');
+          useMyLocationBtn.removeAttribute('disabled');
+
+          let message = 'Unable to retrieve your location.';
+          if (error.code === error.PERMISSION_DENIED) {
+            message = 'Location permission denied. Please allow location access in your browser settings.';
+          } else if (error.code === error.TIMEOUT) {
+            message = 'Location request timed out. Please try again.';
+          } else if (error.code === error.POSITION_UNAVAILABLE) {
+            message = 'Location information is unavailable. Please try again.';
+          }
+          alert(message);
+        },
+        { enableHighAccuracy: false, timeout: 10000, maximumAge: 300000 }
+      );
+    });
+  }
+
   // Init: run immediately since module scripts execute after DOM is ready
   (function init() {
     const savedDisplay = localStorage.getItem('mausam_location_display');
