@@ -1,11 +1,518 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import GlobalNav from '../components/GlobalNav.astro';
+import SubNav from '../components/SubNav.astro';
+import PersonaDashboard from '../components/PersonaDashboard.astro';
 ---
 
-<Layout>
-	<Welcome />
+<Layout title="Mausam - Personalized Weather Homepage" description="Personalized weather homepage dashboard built for specific user persona weather insights (health, fitness, surfing, travel, family, farming, commute, events).">
+  <!-- Nav header -->
+  <GlobalNav />
+  <SubNav />
+
+  <main class="flex-1 bg-canvas">
+    
+    <!-- Persona Selection Scroll Bar (Apple Configurator Option Chips style) -->
+    <section class="w-full bg-canvas border-b border-hairline py-4 overflow-x-auto scrollbar-none" id="persona-selector-section">
+      <div class="max-w-[1440px] mx-auto px-6 flex items-center gap-3 w-max">
+        <span class="text-xs font-semibold text-ink-muted-48 uppercase tracking-wider mr-2">Personalize Home:</span>
+        
+        <button data-select-persona="health" class="persona-chip px-4 py-2 bg-canvas text-ink text-sm font-normal border border-hairline rounded-pill hover:border-primary/50 transition-all cursor-pointer flex items-center gap-1.5 active-scale">
+          <span>🌿</span> Health-Conscious
+        </button>
+        <button data-select-persona="fitness" class="persona-chip px-4 py-2 bg-canvas text-ink text-sm font-normal border border-hairline rounded-pill hover:border-primary/50 transition-all cursor-pointer flex items-center gap-1.5 active-scale">
+          <span>🏃‍♂️</span> Outdoor Fitness
+        </button>
+        <button data-select-persona="marine" class="persona-chip px-4 py-2 bg-canvas text-ink text-sm font-normal border border-hairline rounded-pill hover:border-primary/50 transition-all cursor-pointer flex items-center gap-1.5 active-scale">
+          <span>🏄</span> Beach & Surf
+        </button>
+        <button data-select-persona="travel" class="persona-chip px-4 py-2 bg-canvas text-ink text-sm font-normal border border-hairline rounded-pill hover:border-primary/50 transition-all cursor-pointer flex items-center gap-1.5 active-scale">
+          <span>✈️</span> Travelers
+        </button>
+        <button data-select-persona="family" class="persona-chip px-4 py-2 bg-canvas text-ink text-sm font-normal border border-hairline rounded-pill hover:border-primary/50 transition-all cursor-pointer flex items-center gap-1.5 active-scale">
+          <span>🎒</span> Parents & Families
+        </button>
+        <button data-select-persona="agriculture" class="persona-chip px-4 py-2 bg-canvas text-ink text-sm font-normal border border-hairline rounded-pill hover:border-primary/50 transition-all cursor-pointer flex items-center gap-1.5 active-scale">
+          <span>👩‍🌾</span> Agriculture
+        </button>
+        <button data-select-persona="commute" class="persona-chip px-4 py-2 bg-canvas text-ink text-sm font-normal border border-hairline rounded-pill hover:border-primary/50 transition-all cursor-pointer flex items-center gap-1.5 active-scale">
+          <span>🚗</span> Commuters
+        </button>
+        <button data-select-persona="event_planner" class="persona-chip px-4 py-2 bg-canvas text-ink text-sm font-normal border border-hairline rounded-pill hover:border-primary/50 transition-all cursor-pointer flex items-center gap-1.5 active-scale">
+          <span>📅</span> Event Planners
+        </button>
+      </div>
+    </section>
+
+    <!-- Photography-First Weather Hero Section (product-tile-dark) -->
+    <section class="relative w-full h-[400px] md:h-[480px] bg-surface-black overflow-hidden flex items-end">
+      <!-- Background Photo Grid (Dynamic photo based on location) -->
+      <div id="hero-photo" class="absolute inset-0 bg-cover bg-center transition-all duration-700 ease-in-out scale-102" style="background-image: url('https://images.unsplash.com/photo-1601297183305-6df142704ea2?q=80&w=1200&auto=format&fit=crop'); background-color: #1a1a2e;">
+      </div>
+      <!-- Soft dark visual gradient overlays -->
+      <div class="absolute inset-0 bg-gradient-to-t from-surface-black via-surface-black/50 to-transparent"></div>
+      <div class="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-surface-black/60 to-transparent"></div>
+      
+      <!-- Hero Content Stack (SF Pro Display, tight letter spacing) -->
+      <div class="relative z-10 w-full max-w-[1440px] mx-auto px-6 pb-12 text-white">
+        <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+          <div>
+            <!-- Location (SF Pro Display 21px / 600) -->
+            <p id="hero-location" class="text-lg md:text-xl font-semibold tracking-apple-tight text-primary-on-dark mb-1">Mumbai, India</p>
+            
+            <!-- Temperature (SF Pro Display 56px / 600, tight tracking) -->
+            <h1 id="hero-temp" class="text-5xl md:text-7xl font-semibold tracking-apple-hero leading-none mb-2">29.5°C</h1>
+            
+            <!-- Condition Tagline (SF Pro Display 28px / 400) -->
+            <p id="hero-condition" class="text-xl md:text-2xl font-light text-body-muted tracking-apple-tight">Passing Showers</p>
+          </div>
+          
+          <!-- Key Horizontal Weather Strips (SF Pro Text 14px) -->
+          <div class="flex flex-wrap items-center gap-x-8 gap-y-3 text-sm text-body-muted border-t md:border-t-0 md:border-l border-white/20 pt-4 md:pt-0 md:pl-8">
+            <div class="flex flex-col">
+              <span class="text-xs uppercase text-ink-muted-48">Humidity</span>
+              <span id="hero-humidity" class="text-base font-semibold text-white">88%</span>
+            </div>
+            <div class="flex flex-col">
+              <span class="text-xs uppercase text-ink-muted-48">Wind Speed</span>
+              <span id="hero-wind" class="text-base font-semibold text-white">24.5 kph WSW</span>
+            </div>
+            <div class="flex flex-col">
+              <span class="text-xs uppercase text-ink-muted-48">UV Index</span>
+              <span id="hero-uv" class="text-base font-semibold text-white">6.0 (Mod)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Dynamic Dashboard Container -->
+    <PersonaDashboard />
+
+  </main>
+
+  <!-- Apple-inspired Parchment Footer -->
+  <footer class="bg-canvas-parchment border-t border-hairline text-ink-muted-80 text-xs py-16 px-6" id="footer-section">
+    <div class="max-w-[980px] mx-auto">
+      
+      <!-- Four-Column link architecture (typography.dense-link / 2.41 line height) -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12 border-b border-hairline pb-12">
+        <div>
+          <h4 class="font-semibold text-ink uppercase tracking-wider mb-3">Mausam Profiles</h4>
+          <ul class="space-y-1 text-ink-muted-48">
+            <li><a href="#" class="hover:text-primary transition-colors">Health-Conscious</a></li>
+            <li><a href="#" class="hover:text-primary transition-colors">Outdoor Fitness</a></li>
+            <li><a href="#" class="hover:text-primary transition-colors">Surfers & Beach</a></li>
+            <li><a href="#" class="hover:text-primary transition-colors">Travel Navigator</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold text-ink uppercase tracking-wider mb-3">Sectors</h4>
+          <ul class="space-y-1 text-ink-muted-48">
+            <li><a href="#" class="hover:text-primary transition-colors">Agriculture Hub</a></li>
+            <li><a href="#" class="hover:text-primary transition-colors">Commuter Transit</a></li>
+            <li><a href="#" class="hover:text-primary transition-colors">Event Planning</a></li>
+            <li><a href="#" class="hover:text-primary transition-colors">Family Routines</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold text-ink uppercase tracking-wider mb-3">Weather Science</h4>
+          <ul class="space-y-1 text-ink-muted-48">
+            <li><a href="#" class="hover:text-primary transition-colors">Air Quality Index</a></li>
+            <li><a href="#" class="hover:text-primary transition-colors">UV Hazards index</a></li>
+            <li><a href="#" class="hover:text-primary transition-colors">Marine Wave Tides</a></li>
+            <li><a href="#" class="hover:text-primary transition-colors">Radar Mapping</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold text-ink uppercase tracking-wider mb-3">Account</h4>
+          <ul class="space-y-1 text-ink-muted-48">
+            <li><a href="#" class="hover:text-primary transition-colors">Saved Locations</a></li>
+            <li><a href="#" class="hover:text-primary transition-colors">Flight Trackers</a></li>
+            <li><a href="#" class="hover:text-primary transition-colors">Developer Portal</a></li>
+            <li><a href="#" class="hover:text-primary transition-colors">Feedback & Support</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Legal Rows (fine-print / micro-legal) -->
+      <div class="text-ink-muted-48 space-y-4">
+        <p class="leading-relaxed">
+          Disclaimer: Weather forecasts, AI suggestions, air quality indices, and marine safety alerts provided on Mausam are for informational purposes only. Do not make critical navigation, flight, farming, or health decisions solely based on Mausam data.
+        </p>
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between border-t border-hairline pt-4 gap-4 text-ink-muted-48 font-normal">
+          <div>
+            Copyright © 2026 Mausam Inc. All rights reserved. <span class="font-semibold text-ink ml-1">SIH26076</span>
+          </div>
+          <div class="flex items-center gap-4">
+            <a href="#" class="hover:underline hover:text-primary">Privacy Policy</a>
+            <span class="w-[1px] h-3 bg-hairline"></span>
+            <a href="#" class="hover:underline hover:text-primary">Terms of Use</a>
+            <span class="w-[1px] h-3 bg-hairline"></span>
+            <a href="#" class="hover:underline hover:text-primary">Legal Notices</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </footer>
 </Layout>
+
+<!-- Client-side script handling location changes and persona toggles -->
+<script>
+  let activeCity = localStorage.getItem('mausam_city') || 'mumbai';
+  let activePersona = localStorage.getItem('mausam_persona') || 'health';
+
+  // Race condition guard: only the latest request should update the UI
+  let weatherRequestId = 0;
+  let aiRequestId = 0;
+
+  // Flag to suppress input event when we programmatically set the search input value
+  let suppressInputEvent = false;
+
+  const CITY_PHOTOS: Record<string, string> = {
+    mumbai: 'https://images.unsplash.com/photo-1601297183305-6df142704ea2?q=80&w=1200&auto=format&fit=crop',
+    new_delhi: 'https://images.unsplash.com/photo-1587474260584-136574528ed5?q=80&w=1200&auto=format&fit=crop',
+    london: 'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?q=80&w=1200&auto=format&fit=crop',
+    sydney: 'https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?q=80&w=1200&auto=format&fit=crop',
+    new_york: 'https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?q=80&w=1200&auto=format&fit=crop'
+  };
+
+  const WEATHER_FALLBACK_PHOTOS: Record<string, string> = {
+    sunny: 'https://images.unsplash.com/photo-1504608524841-42fe6f032b4b?q=80&w=1200&auto=format&fit=crop',
+    rainy: 'https://images.unsplash.com/photo-1534274988757-a28bf1a57c17?q=80&w=1200&auto=format&fit=crop',
+    cloudy: 'https://images.unsplash.com/photo-1534088568595-a066f410bcda?q=80&w=1200&auto=format&fit=crop',
+    stormy: 'https://images.unsplash.com/photo-1527482797697-8795b05a13fe?q=80&w=1200&auto=format&fit=crop',
+    foggy: 'https://images.unsplash.com/photo-1485236715568-ddc5ee6ca227?q=80&w=1200&auto=format&fit=crop',
+    default: 'https://images.unsplash.com/photo-1504608524841-42fe6f032b4b?q=80&w=1200&auto=format&fit=crop'
+  };
+
+  const locationSearchInput = document.getElementById('location-search-input') as HTMLInputElement | null;
+  const locationSearchResults = document.getElementById('location-search-results');
+  const subNavCityDisplay = document.getElementById('sub-nav-city-display');
+  const heroLocation = document.getElementById('hero-location');
+  const heroTemp = document.getElementById('hero-temp');
+  const heroCondition = document.getElementById('hero-condition');
+  const heroHumidity = document.getElementById('hero-humidity');
+  const heroWind = document.getElementById('hero-wind');
+  const heroUv = document.getElementById('hero-uv');
+  const heroPhoto = document.getElementById('hero-photo');
+  const aiRecText = document.getElementById('ai-rec-text');
+
+  let searchTimeout: ReturnType<typeof setTimeout> | null = null;
+  let selectedLocation: { key: string; display: string } | null = null;
+
+  function renderSearchResults(results: any[]) {
+    if (!locationSearchResults) return;
+    if (results.length === 0) {
+      locationSearchResults.innerHTML = '<div class="px-4 py-3 text-sm text-ink-muted-48">No locations found</div>';
+      positionDropdown();
+      locationSearchResults.classList.remove('hidden');
+      return;
+    }
+    locationSearchResults.innerHTML = results.map(loc => `
+      <div class="location-result-item px-4 py-3 text-sm cursor-pointer hover:bg-surface-pearl transition-colors border-b border-hairline last:border-b-0"
+           data-city-key="${loc.key}"
+           data-display="${loc.display}"
+           data-lat="${loc.lat}"
+           data-lon="${loc.lon}">
+        <div class="font-semibold text-ink">${loc.name}</div>
+        <div class="text-xs text-ink-muted-48">${loc.region}, ${loc.country}</div>
+      </div>
+    `).join('');
+    positionDropdown();
+    locationSearchResults.classList.remove('hidden');
+
+    locationSearchResults.querySelectorAll('.location-result-item').forEach(item => {
+      item.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const key = item.getAttribute('data-city-key') || 'mumbai';
+        const display = item.getAttribute('data-display') || '';
+        selectLocation(key, display);
+      });
+    });
+  }
+
+  function positionDropdown() {
+    if (!locationSearchInput || !locationSearchResults) return;
+    const rect = locationSearchInput.getBoundingClientRect();
+    locationSearchResults.style.top = `${rect.bottom + 4}px`;
+    locationSearchResults.style.left = `${rect.left}px`;
+    locationSearchResults.style.width = `${rect.width}px`;
+  }
+
+  function selectLocation(key: string, display: string) {
+    activeCity = key;
+    selectedLocation = { key, display };
+    localStorage.setItem('mausam_city', key);
+    if (display) localStorage.setItem('mausam_location_display', display);
+
+    // Hide dropdown immediately
+    if (locationSearchResults) locationSearchResults.classList.add('hidden');
+
+    // Set input value WITHOUT triggering the input event search
+    suppressInputEvent = true;
+    if (locationSearchInput) locationSearchInput.value = display || key;
+    suppressInputEvent = false;
+
+    // Fetch fresh data for the new location
+    loadWeatherData(activeCity, display);
+    loadAISuggestions(activeCity, activePersona, display);
+  }
+
+  if (locationSearchInput) {
+    locationSearchInput.addEventListener('input', () => {
+      if (suppressInputEvent) return;
+
+      const query = locationSearchInput.value.trim();
+      if (searchTimeout) clearTimeout(searchTimeout);
+      if (query.length < 2) {
+        if (locationSearchResults) locationSearchResults.classList.add('hidden');
+        return;
+      }
+      searchTimeout = setTimeout(async () => {
+        try {
+          const response = await fetch(`/api/search?q=${encodeURIComponent(query)}`);
+          if (!response.ok) throw new Error('Search failed');
+          const data = await response.json();
+          const results = Array.isArray(data) ? data : (data.value || []);
+          renderSearchResults(results.map((loc: any) => ({
+            ...loc,
+            key: loc.name.toLowerCase().replace(/[^a-z0-9]+/g, '_')
+          })));
+        } catch (error) {
+          console.error('Location search error:', error);
+          if (locationSearchResults) locationSearchResults.classList.add('hidden');
+        }
+      }, 300);
+    });
+
+    locationSearchInput.addEventListener('focus', () => {
+      if (suppressInputEvent) return;
+      const query = locationSearchInput.value.trim();
+      if (query.length >= 2) {
+        locationSearchInput.dispatchEvent(new Event('input'));
+      }
+    });
+
+    document.addEventListener('click', (e) => {
+      const container = document.getElementById('location-search-container');
+      const dropdown = document.getElementById('location-search-results');
+      const clickedOnDropdown = dropdown && dropdown.contains(e.target as Node);
+      const clickedOnInput = container && container.contains(e.target as Node);
+      if (!clickedOnInput && !clickedOnDropdown) {
+        if (locationSearchResults) locationSearchResults.classList.add('hidden');
+      }
+    });
+  }
+
+  async function loadWeatherData(city: string, locationQuery?: string) {
+    const requestId = ++weatherRequestId;
+    
+    // Immediately show loading/skeleton state for main elements
+    if (heroLocation) heroLocation.textContent = locationQuery || city;
+    if (heroTemp) heroTemp.textContent = '--°C';
+    if (heroCondition) heroCondition.textContent = 'Loading weather...';
+    if (heroHumidity) heroHumidity.textContent = '--%';
+    if (heroWind) heroWind.textContent = '-- kph --';
+    if (heroUv) heroUv.textContent = '--';
+    if (subNavCityDisplay) subNavCityDisplay.textContent = locationQuery || city;
+
+    // Reset all cards across all personas to loading state
+    const cardIds = [
+      'health-aqi-card', 'health-pollen-card', 'health-uv-card', 'health-humidity-card',
+      'fitness-hours-card', 'fitness-sun-card', 'fitness-wind-card', 'fitness-heat-card',
+      'marine-sea-card', 'marine-wave-card', 'marine-temp-card', 'marine-tide-card',
+      'travel-saved-card', 'travel-flight-card', 'travel-packing-card',
+      'family-commute-card', 'family-rain-card', 'family-warning-card',
+      'agri-moisture-card', 'agri-rain-card', 'agri-frost-card', 'agri-planting-card',
+      'commute-traffic-card', 'commute-visibility-card', 'commute-storm-card',
+      'events-comfort-card', 'events-rain-card', 'events-suitability-card'
+    ];
+    cardIds.forEach(id => {
+      updateCardText(id, '--', 'Loading weather context...');
+    });
+
+    try {
+      const qParam = locationQuery ? `&q=${encodeURIComponent(locationQuery)}` : '';
+      const url = `/api/weather?city=${city}${qParam}`;
+      const response = await fetch(url);
+      if (!response.ok) throw new Error('Weather fetch failed');
+      const data = await response.json();
+
+      // Guard: if another request was started after this one, discard this response
+      if (requestId !== weatherRequestId) return;
+
+      if (heroLocation) heroLocation.textContent = `${data.location.name}, ${data.location.country}`;
+      if (heroTemp) heroTemp.textContent = `${data.current.temp_c}°C`;
+      if (heroCondition) heroCondition.textContent = data.current.condition.text;
+      if (heroHumidity) heroHumidity.textContent = `${data.current.humidity}%`;
+      if (heroWind) heroWind.textContent = `${data.current.wind_kph} kph ${data.current.wind_dir}`;
+
+      const uvLabel = data.current.uv >= 8 ? 'Very High' : data.current.uv >= 6 ? 'High' : 'Moderate';
+      if (heroUv) heroUv.textContent = `${data.current.uv} (${uvLabel})`;
+
+      if (heroPhoto) {
+        if (CITY_PHOTOS[city]) {
+          const img = new Image();
+          img.onload = () => {
+            if (requestId === weatherRequestId) heroPhoto.style.backgroundImage = `url('${CITY_PHOTOS[city]}')`;
+          };
+          img.onerror = () => {
+            const conditionKey = data.current.condition.icon || 'default';
+            const fallbackUrl = WEATHER_FALLBACK_PHOTOS[conditionKey] || WEATHER_FALLBACK_PHOTOS['default'];
+            if (requestId === weatherRequestId) heroPhoto.style.backgroundImage = `url('${fallbackUrl}')`;
+          };
+          img.src = CITY_PHOTOS[city];
+        } else {
+          const conditionKey = data.current.condition.icon || 'default';
+          const fallbackUrl = WEATHER_FALLBACK_PHOTOS[conditionKey] || WEATHER_FALLBACK_PHOTOS['default'];
+          heroPhoto.style.backgroundImage = `url('${fallbackUrl}')`;
+        }
+      }
+      if (subNavCityDisplay) {
+        subNavCityDisplay.textContent = `${data.location.name}, ${data.location.country}`;
+      }
+
+      // 1. Health Cards
+      updateCardText('health-aqi-card', `${data.aqi.index} (${data.aqi.label})`, `PM2.5: ${data.aqi.pm25} µg/m³ | PM10: ${data.aqi.pm10} µg/m³`);
+      updateCardText('health-pollen-card', `Grass: ${data.pollen.grass}`, `Tree: ${data.pollen.tree} | Weed: ${data.pollen.weed}`);
+      updateCardText('health-uv-card', `UV Index: ${data.current.uv}`, data.current.uv >= 8 ? "Critical sun hazards. Wear sunscreen!" : "Moderate risk. Standard sunscreen advised.");
+      updateCardText('health-humidity-card', `${data.current.humidity}%`, data.current.humidity > 80 ? "Damp atmosphere, can trigger joint pain." : "Comfortable ambient humidity.");
+
+      // 2. Fitness Cards
+      updateCardText('fitness-hours-card', data.fitness.best_running_hours.join(' & '), "Optimal thermal periods today.");
+      updateCardText('fitness-sun-card', `Rise: ${data.fitness.sunrise}`, `Set: ${data.fitness.sunset}`);
+      updateCardText('fitness-wind-card', `${data.current.wind_kph} kph`, `Gusts from ${data.current.wind_dir}`);
+      updateCardText('fitness-heat-card', data.fitness.heat_alert ? "Caution Active" : "No Alerts", data.fitness.heat_alert ? "High risk of heat exhaustion." : "Temperature is safe for outdoor sprints.");
+
+      // 3. Marine Cards
+      updateCardText('marine-sea-card', data.marine.sea_condition, `Wave Period: 8s`);
+      updateCardText('marine-wave-card', `${data.marine.wave_height_m}m`, "Significant swell height.");
+      updateCardText('marine-temp-card', `${data.marine.water_temp_c}°C`, "Sea surface temperature.");
+      const nextTide = data.marine.tide_timings.length > 0 ? `${data.marine.tide_timings[0].type} at ${data.marine.tide_timings[0].time}` : 'N/A';
+      updateCardText('marine-tide-card', nextTide, data.marine.tide_timings.map((t: any) => `${t.type}: ${t.time}`).join(' | '));
+
+      // 4. Travel Cards
+      const destString = data.travel.saved_destinations.map((d: any) => `${d.name}: ${d.temp_c}°C`).join(' | ');
+      updateCardText('travel-saved-card', "Active Trackers", destString);
+      updateCardText('travel-flight-card', data.travel.flight_alerts.status, data.travel.flight_alerts.details);
+      updateCardText('travel-packing-card', "Luggage Tips", data.travel.packing_suggestions);
+
+      // 5. Family Cards
+      updateCardText('family-commute-card', "Commute Index", data.family.school_commute);
+      updateCardText('family-rain-card', "Rain Timeline", data.family.rain_alerts);
+      updateCardText('family-warning-card', "Severe Bulletins", data.family.severe_warning || "No severe warnings active.");
+
+      // 6. Agriculture Cards
+      updateCardText('agri-moisture-card', `${data.agriculture.soil_moisture_pct}%`, "Current soil saturation (10cm depth).");
+      updateCardText('agri-rain-card', `${data.agriculture.rainfall_prediction_24h_mm} mm`, "Accumulated next 24 hours.");
+      updateCardText('agri-frost-card', data.agriculture.frost_alert ? "Frost Alert" : "No Frost Risk", data.agriculture.frost_alert ? "Cover high-value plants." : "Ground temperature safe.");
+      updateCardText('agri-planting-card', "Sowing Guide", data.agriculture.seasonal_planting_guidance);
+
+      // 7. Commute Cards
+      updateCardText('commute-traffic-card', "Highway Index", data.commute.traffic_status);
+      updateCardText('commute-visibility-card', `${data.current.visibility_km} km`, data.commute.visibility_alert);
+      updateCardText('commute-storm-card', "Travel Alerts", data.commute.storm_fog_alert);
+
+      // 8. Event Planner Cards
+      updateCardText('events-comfort-card', `${data.fitness.comfort_index}/100`, data.event_planner.extended_comfort);
+      updateCardText('events-rain-card', `${data.event_planner.rain_probability_pct}%`, "Precipitation probability during events.");
+      updateCardText('events-suitability-card', data.event_planner.rain_probability_pct > 50 ? "Indoor Backups advised" : "Outdoor Friendly", "Extended 12-hour gathering suitability.");
+
+    } catch (error) {
+      if (requestId === weatherRequestId) {
+        console.error('Weather fetch error:', error);
+        if (heroCondition) heroCondition.textContent = 'Weather service temporarily offline';
+        cardIds.forEach(id => {
+          updateCardText(id, 'N/A', 'Failed to load weather data for this location.');
+        });
+      }
+    }
+  }
+
+  function updateCardText(cardId: string, value: string, desc: string) {
+    const cardEl = document.getElementById(cardId);
+    if (!cardEl) return;
+    const valueEl = cardEl.querySelector('.text-\\[28px\\]');
+    if (valueEl) valueEl.textContent = value;
+    const descEl = cardEl.querySelector('p');
+    if (descEl) descEl.textContent = desc;
+  }
+
+  async function loadAISuggestions(city: string, persona: string, locationQuery?: string) {
+    const requestId = ++aiRequestId;
+    if (aiRecText) {
+      aiRecText.classList.add('opacity-40');
+      aiRecText.textContent = "Analyzing weather parameters for personalized suggestions...";
+    }
+    try {
+      const qParam = locationQuery ? `&q=${encodeURIComponent(locationQuery)}` : '';
+      const response = await fetch(`/api/recommendations?city=${city}&persona=${persona}${qParam}`);
+      if (!response.ok) throw new Error('AI recommendations fetch failed');
+      const data = await response.json();
+      if (requestId !== aiRequestId) return;
+      if (aiRecText) {
+        aiRecText.classList.remove('opacity-40');
+        aiRecText.textContent = data.recommendation;
+      }
+    } catch (error) {
+      if (requestId === aiRequestId) {
+        console.error(error);
+        if (aiRecText) {
+          aiRecText.classList.remove('opacity-40');
+          aiRecText.textContent = "AI insights could not be retrieved. Please check connection.";
+        }
+      }
+    }
+  }
+
+  function showPersonaGrids(selectedPersona: string) {
+    const sections = document.querySelectorAll('.persona-section');
+    sections.forEach(sec => {
+      const pName = sec.getAttribute('data-persona');
+      if (pName === selectedPersona) {
+        sec.classList.remove('hidden');
+        sec.classList.add('block');
+      } else {
+        sec.classList.add('hidden');
+        sec.classList.remove('block');
+      }
+    });
+    const chips = document.querySelectorAll('.persona-chip');
+    chips.forEach(chip => {
+      const pName = chip.getAttribute('data-select-persona');
+      if (pName === selectedPersona) {
+        chip.classList.add('border-primary', 'ring-2', 'ring-primary-focus', 'bg-surface-pearl', 'font-semibold');
+        chip.classList.remove('border-hairline', 'bg-canvas');
+      } else {
+        chip.classList.remove('border-primary', 'ring-2', 'ring-primary-focus', 'bg-surface-pearl', 'font-semibold');
+        chip.classList.add('border-hairline', 'bg-canvas');
+      }
+    });
+  }
+
+  const chips = document.querySelectorAll('.persona-chip');
+  chips.forEach(chip => {
+    chip.addEventListener('click', () => {
+      const targetPersona = chip.getAttribute('data-select-persona');
+      if (targetPersona) {
+        activePersona = targetPersona;
+        localStorage.setItem('mausam_persona', activePersona);
+        showPersonaGrids(activePersona);
+        loadAISuggestions(activeCity, activePersona, selectedLocation?.display || localStorage.getItem('mausam_location_display') || undefined);
+      }
+    });
+  });
+
+  // Init: run immediately since module scripts execute after DOM is ready
+  (function init() {
+    const savedDisplay = localStorage.getItem('mausam_location_display');
+    if (locationSearchInput) {
+      locationSearchInput.value = savedDisplay || activeCity;
+    }
+    loadWeatherData(activeCity, savedDisplay || undefined);
+    showPersonaGrids(activePersona);
+    loadAISuggestions(activeCity, activePersona, savedDisplay || undefined);
+  })();
+</script>
