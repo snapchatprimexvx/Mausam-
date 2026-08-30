@@ -234,11 +234,7 @@ import PersonaDashboard from '../components/PersonaDashboard.astro';
   }
 
   function positionDropdown() {
-    if (!locationSearchInput || !locationSearchResults) return;
-    const rect = locationSearchInput.getBoundingClientRect();
-    locationSearchResults.style.top = `${rect.bottom + 4}px`;
-    locationSearchResults.style.left = `${rect.left}px`;
-    locationSearchResults.style.width = `${rect.width}px`;
+    // No-op: dropdown uses CSS absolute positioning relative to container
   }
 
   function selectLocation(key: string, display: string) {
@@ -249,6 +245,11 @@ import PersonaDashboard from '../components/PersonaDashboard.astro';
 
     // Hide dropdown immediately
     if (locationSearchResults) locationSearchResults.classList.add('hidden');
+
+    // Show loading state on hero
+    if (heroLocation) heroLocation.textContent = display || key;
+    if (heroTemp) heroTemp.textContent = '...';
+    if (heroCondition) heroCondition.textContent = 'Loading weather data...';
 
     // Set input value WITHOUT triggering the input event search
     suppressInputEvent = true;
