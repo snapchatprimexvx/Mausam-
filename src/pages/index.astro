@@ -10,6 +10,7 @@ import PersonaDashboard from '../components/PersonaDashboard.astro';
   <GlobalNav />
   <SubNav />
 
+<<<<<<< HEAD
   <main class="flex-1 bg-canvas overflow-x-hidden">
     
     <!-- Persona Selection 2-Column Grid -->
@@ -42,11 +43,48 @@ import PersonaDashboard from '../components/PersonaDashboard.astro';
             <span class="text-base sm:text-lg">📅</span> <span data-i18n="persona.eventPlanning">Event Planning</span>
           </button>
         </div>
+=======
+  <main class="flex-1 bg-canvas">
+    
+    <!-- Persona Selection Scroll Bar (Apple Configurator Option Chips style) -->
+    <section class="w-full bg-canvas border-b border-hairline py-4 overflow-x-auto scrollbar-none" id="persona-selector-section">
+      <div class="max-w-[1440px] mx-auto px-6 flex items-center gap-3 w-max">
+        <span class="text-xs font-semibold text-ink-muted-48 uppercase tracking-wider mr-2">Personalize Home:</span>
+        
+        <button data-select-persona="health" class="persona-chip px-4 py-2 bg-canvas text-ink text-sm font-normal border border-hairline rounded-pill hover:border-primary/50 transition-all cursor-pointer flex items-center gap-1.5 active-scale">
+          <span>🌿</span> Health-Conscious
+        </button>
+        <button data-select-persona="fitness" class="persona-chip px-4 py-2 bg-canvas text-ink text-sm font-normal border border-hairline rounded-pill hover:border-primary/50 transition-all cursor-pointer flex items-center gap-1.5 active-scale">
+          <span>🏃‍♂️</span> Outdoor Fitness
+        </button>
+        <button data-select-persona="marine" class="persona-chip px-4 py-2 bg-canvas text-ink text-sm font-normal border border-hairline rounded-pill hover:border-primary/50 transition-all cursor-pointer flex items-center gap-1.5 active-scale">
+          <span>🏄</span> Beach & Surf
+        </button>
+        <button data-select-persona="travel" class="persona-chip px-4 py-2 bg-canvas text-ink text-sm font-normal border border-hairline rounded-pill hover:border-primary/50 transition-all cursor-pointer flex items-center gap-1.5 active-scale">
+          <span>✈️</span> Travelers
+        </button>
+        <button data-select-persona="family" class="persona-chip px-4 py-2 bg-canvas text-ink text-sm font-normal border border-hairline rounded-pill hover:border-primary/50 transition-all cursor-pointer flex items-center gap-1.5 active-scale">
+          <span>🎒</span> Parents & Families
+        </button>
+        <button data-select-persona="agriculture" class="persona-chip px-4 py-2 bg-canvas text-ink text-sm font-normal border border-hairline rounded-pill hover:border-primary/50 transition-all cursor-pointer flex items-center gap-1.5 active-scale">
+          <span>👩‍🌾</span> Agriculture
+        </button>
+        <button data-select-persona="commute" class="persona-chip px-4 py-2 bg-canvas text-ink text-sm font-normal border border-hairline rounded-pill hover:border-primary/50 transition-all cursor-pointer flex items-center gap-1.5 active-scale">
+          <span>🚗</span> Commuters
+        </button>
+        <button data-select-persona="event_planner" class="persona-chip px-4 py-2 bg-canvas text-ink text-sm font-normal border border-hairline rounded-pill hover:border-primary/50 transition-all cursor-pointer flex items-center gap-1.5 active-scale">
+          <span>📅</span> Event Planners
+        </button>
+>>>>>>> 48afc383babc7d73b05edbb707fa98f758fde575
       </div>
     </section>
 
     <!-- Photography-First Weather Hero Section (product-tile-dark) -->
+<<<<<<< HEAD
     <section class="relative w-full h-[320px] sm:h-[380px] md:h-[400px] lg:h-[480px] bg-surface-black overflow-hidden flex items-end">
+=======
+    <section class="relative w-full h-[400px] md:h-[480px] bg-surface-black overflow-hidden flex items-end">
+>>>>>>> 48afc383babc7d73b05edbb707fa98f758fde575
       <!-- Background Photo Grid (Dynamic photo based on location) -->
       <div id="hero-photo" class="absolute inset-0 bg-cover bg-center transition-all duration-700 ease-in-out scale-102" style="background-image: url('https://images.unsplash.com/photo-1601297183305-6df142704ea2?q=80&w=1200&auto=format&fit=crop'); background-color: #1a1a2e;">
       </div>
@@ -55,6 +93,7 @@ import PersonaDashboard from '../components/PersonaDashboard.astro';
       <div class="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-surface-black/60 to-transparent"></div>
       
       <!-- Hero Content Stack (SF Pro Display, tight letter spacing) -->
+<<<<<<< HEAD
       <div class="relative z-10 w-full max-w-[1440px] mx-auto px-4 sm:px-6 pb-8 sm:pb-12 text-white">
         <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 sm:gap-6">
           <div class="min-w-0">
@@ -81,6 +120,34 @@ import PersonaDashboard from '../components/PersonaDashboard.astro';
             <div class="flex flex-col">
               <span class="text-[10px] sm:text-xs uppercase text-ink-muted-48" data-i18n="hero.uvIndex">UV Index</span>
               <span id="hero-uv" class="text-sm sm:text-base font-semibold text-white">6.0 (Mod)</span>
+=======
+      <div class="relative z-10 w-full max-w-[1440px] mx-auto px-6 pb-12 text-white">
+        <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+          <div>
+            <!-- Location (SF Pro Display 21px / 600) -->
+            <p id="hero-location" class="text-lg md:text-xl font-semibold tracking-apple-tight text-primary-on-dark mb-1">Mumbai, India</p>
+            
+            <!-- Temperature (SF Pro Display 56px / 600, tight tracking) -->
+            <h1 id="hero-temp" class="text-5xl md:text-7xl font-semibold tracking-apple-hero leading-none mb-2">29.5°C</h1>
+            
+            <!-- Condition Tagline (SF Pro Display 28px / 400) -->
+            <p id="hero-condition" class="text-xl md:text-2xl font-light text-body-muted tracking-apple-tight">Passing Showers</p>
+          </div>
+          
+          <!-- Key Horizontal Weather Strips (SF Pro Text 14px) -->
+          <div class="flex flex-wrap items-center gap-x-8 gap-y-3 text-sm text-body-muted border-t md:border-t-0 md:border-l border-white/20 pt-4 md:pt-0 md:pl-8">
+            <div class="flex flex-col">
+              <span class="text-xs uppercase text-ink-muted-48">Humidity</span>
+              <span id="hero-humidity" class="text-base font-semibold text-white">88%</span>
+            </div>
+            <div class="flex flex-col">
+              <span class="text-xs uppercase text-ink-muted-48">Wind Speed</span>
+              <span id="hero-wind" class="text-base font-semibold text-white">24.5 kph WSW</span>
+            </div>
+            <div class="flex flex-col">
+              <span class="text-xs uppercase text-ink-muted-48">UV Index</span>
+              <span id="hero-uv" class="text-base font-semibold text-white">6.0 (Mod)</span>
+>>>>>>> 48afc383babc7d73b05edbb707fa98f758fde575
             </div>
           </div>
         </div>
@@ -93,6 +160,7 @@ import PersonaDashboard from '../components/PersonaDashboard.astro';
   </main>
 
   <!-- Apple-inspired Parchment Footer -->
+<<<<<<< HEAD
   <footer class="bg-canvas-parchment border-t border-hairline text-ink-muted-80 text-xs py-10 sm:py-16 px-4 sm:px-6" id="footer-section">
     <div class="max-w-[980px] mx-auto">
       
@@ -100,6 +168,15 @@ import PersonaDashboard from '../components/PersonaDashboard.astro';
       <div class="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 mb-8 sm:mb-12 border-b border-hairline pb-8 sm:pb-12">
         <div>
           <h4 class="font-semibold text-ink uppercase tracking-wider mb-2 sm:mb-3" data-i18n="footer.profiles">Mausam Profiles</h4>
+=======
+  <footer class="bg-canvas-parchment border-t border-hairline text-ink-muted-80 text-xs py-16 px-6" id="footer-section">
+    <div class="max-w-[980px] mx-auto">
+      
+      <!-- Four-Column link architecture (typography.dense-link / 2.41 line height) -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12 border-b border-hairline pb-12">
+        <div>
+          <h4 class="font-semibold text-ink uppercase tracking-wider mb-3">Mausam Profiles</h4>
+>>>>>>> 48afc383babc7d73b05edbb707fa98f758fde575
           <ul class="space-y-1 text-ink-muted-48">
             <li><a href="#" class="hover:text-primary transition-colors">Health-Conscious</a></li>
             <li><a href="#" class="hover:text-primary transition-colors">Outdoor Fitness</a></li>
@@ -108,7 +185,11 @@ import PersonaDashboard from '../components/PersonaDashboard.astro';
           </ul>
         </div>
         <div>
+<<<<<<< HEAD
           <h4 class="font-semibold text-ink uppercase tracking-wider mb-2 sm:mb-3" data-i18n="footer.sectors">Sectors</h4>
+=======
+          <h4 class="font-semibold text-ink uppercase tracking-wider mb-3">Sectors</h4>
+>>>>>>> 48afc383babc7d73b05edbb707fa98f758fde575
           <ul class="space-y-1 text-ink-muted-48">
             <li><a href="#" class="hover:text-primary transition-colors">Agriculture Hub</a></li>
             <li><a href="#" class="hover:text-primary transition-colors">Commuter Transit</a></li>
@@ -117,7 +198,11 @@ import PersonaDashboard from '../components/PersonaDashboard.astro';
           </ul>
         </div>
         <div>
+<<<<<<< HEAD
           <h4 class="font-semibold text-ink uppercase tracking-wider mb-2 sm:mb-3" data-i18n="footer.weatherScience">Weather Science</h4>
+=======
+          <h4 class="font-semibold text-ink uppercase tracking-wider mb-3">Weather Science</h4>
+>>>>>>> 48afc383babc7d73b05edbb707fa98f758fde575
           <ul class="space-y-1 text-ink-muted-48">
             <li><a href="#" class="hover:text-primary transition-colors">Air Quality Index</a></li>
             <li><a href="#" class="hover:text-primary transition-colors">UV Hazards index</a></li>
@@ -126,7 +211,11 @@ import PersonaDashboard from '../components/PersonaDashboard.astro';
           </ul>
         </div>
         <div>
+<<<<<<< HEAD
           <h4 class="font-semibold text-ink uppercase tracking-wider mb-2 sm:mb-3" data-i18n="footer.account">Account</h4>
+=======
+          <h4 class="font-semibold text-ink uppercase tracking-wider mb-3">Account</h4>
+>>>>>>> 48afc383babc7d73b05edbb707fa98f758fde575
           <ul class="space-y-1 text-ink-muted-48">
             <li><a href="#" class="hover:text-primary transition-colors">Saved Locations</a></li>
             <li><a href="#" class="hover:text-primary transition-colors">Flight Trackers</a></li>
@@ -137,6 +226,7 @@ import PersonaDashboard from '../components/PersonaDashboard.astro';
       </div>
 
       <!-- Legal Rows (fine-print / micro-legal) -->
+<<<<<<< HEAD
       <div class="text-ink-muted-48 space-y-3 sm:space-y-4">
         <p class="leading-relaxed text-[11px] sm:text-xs" data-i18n="footer.disclaimer">
           Disclaimer: Weather forecasts, AI suggestions, air quality indices, and marine safety alerts provided on Mausam are for informational purposes only. Do not make critical navigation, flight, farming, or health decisions solely based on Mausam data.
@@ -151,6 +241,22 @@ import PersonaDashboard from '../components/PersonaDashboard.astro';
             <a href="#" class="hover:underline hover:text-primary" data-i18n="footer.terms">Terms of Use</a>
             <span class="w-[1px] h-3 bg-hairline"></span>
             <a href="#" class="hover:underline hover:text-primary" data-i18n="footer.legal">Legal Notices</a>
+=======
+      <div class="text-ink-muted-48 space-y-4">
+        <p class="leading-relaxed">
+          Disclaimer: Weather forecasts, AI suggestions, air quality indices, and marine safety alerts provided on Mausam are for informational purposes only. Do not make critical navigation, flight, farming, or health decisions solely based on Mausam data.
+        </p>
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between border-t border-hairline pt-4 gap-4 text-ink-muted-48 font-normal">
+          <div>
+            Copyright © 2026 Mausam Inc. All rights reserved. <span class="font-semibold text-ink ml-1">SIH26076</span>
+          </div>
+          <div class="flex items-center gap-4">
+            <a href="#" class="hover:underline hover:text-primary">Privacy Policy</a>
+            <span class="w-[1px] h-3 bg-hairline"></span>
+            <a href="#" class="hover:underline hover:text-primary">Terms of Use</a>
+            <span class="w-[1px] h-3 bg-hairline"></span>
+            <a href="#" class="hover:underline hover:text-primary">Legal Notices</a>
+>>>>>>> 48afc383babc7d73b05edbb707fa98f758fde575
           </div>
         </div>
       </div>
@@ -161,8 +267,11 @@ import PersonaDashboard from '../components/PersonaDashboard.astro';
 
 <!-- Client-side script handling location changes and persona toggles -->
 <script>
+<<<<<<< HEAD
   import { t, getLang, setLang, translatePage, translateCondition } from '../scripts/i18n-client';
 
+=======
+>>>>>>> 48afc383babc7d73b05edbb707fa98f758fde575
   let activeCity = localStorage.getItem('mausam_city') || 'mumbai';
   let activePersona = localStorage.getItem('mausam_persona') || 'health';
 
@@ -208,7 +317,11 @@ import PersonaDashboard from '../components/PersonaDashboard.astro';
   function renderSearchResults(results: any[]) {
     if (!locationSearchResults) return;
     if (results.length === 0) {
+<<<<<<< HEAD
       locationSearchResults.innerHTML = `<div class="px-4 py-3 text-sm text-ink-muted-48">${t('search.noResults')}</div>`;
+=======
+      locationSearchResults.innerHTML = '<div class="px-4 py-3 text-sm text-ink-muted-48">No locations found</div>';
+>>>>>>> 48afc383babc7d73b05edbb707fa98f758fde575
       positionDropdown();
       locationSearchResults.classList.remove('hidden');
       return;
@@ -438,7 +551,11 @@ import PersonaDashboard from '../components/PersonaDashboard.astro';
   function updateCardText(cardId: string, value: string, desc: string) {
     const cardEl = document.getElementById(cardId);
     if (!cardEl) return;
+<<<<<<< HEAD
     const valueEl = cardEl.querySelector('[data-card-value]');
+=======
+    const valueEl = cardEl.querySelector('.text-\\[28px\\]');
+>>>>>>> 48afc383babc7d73b05edbb707fa98f758fde575
     if (valueEl) valueEl.textContent = value;
     const descEl = cardEl.querySelector('p');
     if (descEl) descEl.textContent = desc;
@@ -453,10 +570,15 @@ import PersonaDashboard from '../components/PersonaDashboard.astro';
     try {
       const qParam = locationQuery ? `&q=${encodeURIComponent(locationQuery)}` : '';
       const response = await fetch(`/api/recommendations?city=${city}&persona=${persona}${qParam}`);
+<<<<<<< HEAD
+=======
+      if (!response.ok) throw new Error('AI recommendations fetch failed');
+>>>>>>> 48afc383babc7d73b05edbb707fa98f758fde575
       const data = await response.json();
       if (requestId !== aiRequestId) return;
       if (aiRecText) {
         aiRecText.classList.remove('opacity-40');
+<<<<<<< HEAD
         if (!response.ok || data.error) {
           const errorMsg = data.error || 'AI service returned an error.';
           console.error('[AI Insights]', errorMsg);
@@ -468,6 +590,13 @@ import PersonaDashboard from '../components/PersonaDashboard.astro';
     } catch (error) {
       if (requestId === aiRequestId) {
         console.error('[AI Insights] Fetch error:', error);
+=======
+        aiRecText.textContent = data.recommendation;
+      }
+    } catch (error) {
+      if (requestId === aiRequestId) {
+        console.error(error);
+>>>>>>> 48afc383babc7d73b05edbb707fa98f758fde575
         if (aiRecText) {
           aiRecText.classList.remove('opacity-40');
           aiRecText.textContent = "AI insights could not be retrieved. Please check connection.";
@@ -493,10 +622,17 @@ import PersonaDashboard from '../components/PersonaDashboard.astro';
       const pName = chip.getAttribute('data-select-persona');
       if (pName === selectedPersona) {
         chip.classList.add('border-primary', 'ring-2', 'ring-primary-focus', 'bg-surface-pearl', 'font-semibold');
+<<<<<<< HEAD
         chip.classList.remove('border-hairline', 'bg-white');
       } else {
         chip.classList.remove('border-primary', 'ring-2', 'ring-primary-focus', 'bg-surface-pearl', 'font-semibold');
         chip.classList.add('border-hairline', 'bg-white');
+=======
+        chip.classList.remove('border-hairline', 'bg-canvas');
+      } else {
+        chip.classList.remove('border-primary', 'ring-2', 'ring-primary-focus', 'bg-surface-pearl', 'font-semibold');
+        chip.classList.add('border-hairline', 'bg-canvas');
+>>>>>>> 48afc383babc7d73b05edbb707fa98f758fde575
       }
     });
   }
@@ -568,11 +704,19 @@ import PersonaDashboard from '../components/PersonaDashboard.astro';
             if (locationSearchInput) locationSearchInput.value = displayName;
             if (heroLocation) heroLocation.textContent = displayName;
             if (heroTemp) heroTemp.textContent = `${data.current.temp_c}°C`;
+<<<<<<< HEAD
       if (heroCondition) heroCondition.textContent = translateCondition(data.current.condition.text);
             if (heroHumidity) heroHumidity.textContent = `${data.current.humidity}%`;
             if (heroWind) heroWind.textContent = `${data.current.wind_kph} kph ${data.current.wind_dir}`;
 
       const uvLabel = data.current.uv >= 8 ? (getLang() === 'hi' ? 'बहुत अधिक' : 'Very High') : data.current.uv >= 6 ? (getLang() === 'hi' ? 'अधिक' : 'High') : (getLang() === 'hi' ? 'मध्यम' : 'Moderate');
+=======
+            if (heroCondition) heroCondition.textContent = data.current.condition.text;
+            if (heroHumidity) heroHumidity.textContent = `${data.current.humidity}%`;
+            if (heroWind) heroWind.textContent = `${data.current.wind_kph} kph ${data.current.wind_dir}`;
+
+            const uvLabel = data.current.uv >= 8 ? 'Very High' : data.current.uv >= 6 ? 'High' : 'Moderate';
+>>>>>>> 48afc383babc7d73b05edbb707fa98f758fde575
             if (heroUv) heroUv.textContent = `${data.current.uv} (${uvLabel})`;
 
             if (heroPhoto) {
@@ -647,6 +791,7 @@ import PersonaDashboard from '../components/PersonaDashboard.astro';
     });
   }
 
+<<<<<<< HEAD
   // Language toggle handler
   const langToggleBtn = document.getElementById('lang-toggle-btn');
   if (langToggleBtn) {
@@ -663,6 +808,10 @@ import PersonaDashboard from '../components/PersonaDashboard.astro';
     document.documentElement.lang = getLang();
     translatePage();
 
+=======
+  // Init: run immediately since module scripts execute after DOM is ready
+  (function init() {
+>>>>>>> 48afc383babc7d73b05edbb707fa98f758fde575
     const savedDisplay = localStorage.getItem('mausam_location_display');
     if (locationSearchInput) {
       locationSearchInput.value = savedDisplay || activeCity;

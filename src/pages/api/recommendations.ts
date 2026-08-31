@@ -11,7 +11,11 @@ export const GET: APIRoute = async ({ url }) => {
     // Fetch weather data for AI context (using real location query)
     const weatherData = await fetchWeatherData(queryCity, locationQuery);
 
+<<<<<<< HEAD
     // Generate AI recommendation using real Gemini API
+=======
+    // Generate AI recommendation using Gemini or mock
+>>>>>>> 48afc383babc7d73b05edbb707fa98f758fde575
     const recommendation = await generateRecommendation(queryCity, queryPersona, weatherData);
 
     return new Response(JSON.stringify({ recommendation }), {
@@ -22,9 +26,14 @@ export const GET: APIRoute = async ({ url }) => {
       }
     });
   } catch (error) {
+<<<<<<< HEAD
     const message = error instanceof Error ? error.message : String(error);
     console.error('[API/recommendations] Error:', message);
     return new Response(JSON.stringify({ error: message }), {
+=======
+    console.error('[API/recommendations] Error:', error);
+    return new Response(JSON.stringify({ recommendation: 'AI service temporarily unavailable.' }), {
+>>>>>>> 48afc383babc7d73b05edbb707fa98f758fde575
       status: 500,
       headers: { 'Content-Type': 'application/json' }
     });
