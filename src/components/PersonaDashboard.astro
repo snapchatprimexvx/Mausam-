@@ -1,0 +1,315 @@
+---
+// src/components/PersonaDashboard.astro
+import WeatherCard from './WeatherCard.astro';
+---
+
+<div id="persona-dashboard" class="w-full max-w-[1440px] mx-auto px-4 sm:px-6 py-6 sm:py-10 transition-opacity duration-300">
+  
+  <!-- Dynamic AI Recommendation Panel (Apple-style Atmosphere Edit) -->
+  <div class="mb-6 sm:mb-10 bg-surface-tile-1 border border-white/[0.08] text-white rounded-lg p-5 sm:p-8 relative overflow-hidden active-scale shadow-product" id="ai-recommendation-panel">
+    <div class="relative z-10 max-w-[980px]">
+      <div class="flex items-center gap-2 sm:gap-2.5 mb-2 sm:mb-3">
+        <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-primary-on-dark/20 text-primary-on-dark shrink-0">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+          </svg>
+        </span>
+        <h4 class="text-[10px] sm:text-xs font-semibold text-primary-on-dark uppercase tracking-wider" data-i18n="ai.title">Mausam AI Insights</h4>
+      </div>
+      <p id="ai-rec-text" class="text-base sm:text-lg md:text-xl font-normal leading-relaxed text-body-muted tracking-apple-tight" data-i18n="ai.selectProfile">
+        Select a profile to load personalized insights...
+      </p>
+    </div>
+    <!-- Subtle gradient reflection on dark surface -->
+    <div class="absolute right-0 top-0 bottom-0 w-1/3 bg-linear-to-r from-transparent to-white/[0.02] pointer-events-none"></div>
+  </div>
+
+  <!-- Persona Grids Grid Container -->
+  <div class="space-y-8 sm:space-y-12">
+    
+    <!-- Health-Conscious Persona Grid -->
+    <div data-persona="health" class="persona-section hidden">
+      <div class="border-b border-hairline pb-2 sm:pb-3 mb-4 sm:mb-6">
+        <h2 class="text-lg sm:text-xl font-semibold text-ink tracking-apple-tight flex items-center gap-2">
+          <span>🌿</span> <span data-i18n="section.health.title">Health-Conscious Outlook</span>
+        </h2>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+        <WeatherCard 
+          title="Air Quality Index" 
+          value="--" 
+          desc="Loading AQI details..." 
+          id="health-aqi-card"
+          titleKey="card.aqi"
+        />
+        <WeatherCard 
+          title="Pollen Counts" 
+          value="--" 
+          desc="Loading allergens..." 
+          id="health-pollen-card"
+          titleKey="card.pollen"
+        />
+        <WeatherCard 
+          title="UV Radiation" 
+          value="--" 
+          desc="Loading UV warnings..." 
+          id="health-uv-card"
+          titleKey="card.uvRadiation"
+        />
+        <WeatherCard 
+          title="Humidity & Comfort" 
+          value="--" 
+          desc="Loading relative humidity..." 
+          id="health-humidity-card"
+          titleKey="card.humidityComfort"
+        />
+      </div>
+    </div>
+
+    <!-- Outdoor Fitness Persona Grid -->
+    <div data-persona="fitness" class="persona-section hidden">
+      <div class="border-b border-hairline pb-2 sm:pb-3 mb-4 sm:mb-6">
+        <h2 class="text-lg sm:text-xl font-semibold text-ink tracking-apple-tight flex items-center gap-2">
+          <span>🏃‍♂️</span> <span data-i18n="section.fitness.title">Outdoor Fitness Planner</span>
+        </h2>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+        <WeatherCard 
+          title="Best Running Hours" 
+          value="--" 
+          desc="Loading suitable workout hours..." 
+          id="fitness-hours-card"
+          titleKey="card.runningHours"
+        />
+        <WeatherCard 
+          title="Sun Timings" 
+          value="--" 
+          desc="Loading sunrise and sunset..." 
+          id="fitness-sun-card"
+          titleKey="card.sunTimings"
+        />
+        <WeatherCard 
+          title="Wind Velocity" 
+          value="--" 
+          desc="Loading wind speed and direction..." 
+          id="fitness-wind-card"
+          titleKey="card.windVelocity"
+        />
+        <WeatherCard 
+          title="Heat Alert Status" 
+          value="--" 
+          desc="Checking thermal safety..." 
+          id="fitness-heat-card"
+          titleKey="card.heatAlert"
+        />
+      </div>
+    </div>
+
+    <!-- Beachgoers & Surfers Persona Grid -->
+    <div data-persona="marine" class="persona-section hidden">
+      <div class="border-b border-hairline pb-2 sm:pb-3 mb-4 sm:mb-6">
+        <h2 class="text-lg sm:text-xl font-semibold text-ink tracking-apple-tight flex items-center gap-2">
+          <span>🏄</span> <span data-i18n="section.marine.title">Beachgoers & Surfers Portal</span>
+        </h2>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+        <WeatherCard 
+          title="Sea Conditions" 
+          value="--" 
+          desc="Loading offshore conditions..." 
+          id="marine-sea-card"
+          titleKey="card.seaConditions"
+        />
+        <WeatherCard 
+          title="Wave Heights" 
+          value="--" 
+          desc="Loading wave heights..." 
+          id="marine-wave-card"
+          titleKey="card.waveHeights"
+        />
+        <WeatherCard 
+          title="Water Temperature" 
+          value="--" 
+          desc="Loading sea surface temperature..." 
+          id="marine-temp-card"
+          titleKey="card.waterTemp"
+        />
+        <WeatherCard 
+          title="Tide Timings" 
+          value="--" 
+          desc="Loading high/low tides schedule..." 
+          id="marine-tide-card"
+          titleKey="card.tideTimings"
+        />
+      </div>
+    </div>
+
+    <!-- Travelers Persona Grid -->
+    <div data-persona="travel" class="persona-section hidden">
+      <div class="border-b border-hairline pb-2 sm:pb-3 mb-4 sm:mb-6">
+        <h2 class="text-lg sm:text-xl font-semibold text-ink tracking-apple-tight flex items-center gap-2">
+          <span>✈️</span> <span data-i18n="section.travel.title">Travelers Navigator</span>
+        </h2>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+        <WeatherCard 
+          title="Saved Destination Weather" 
+          value="--" 
+          desc="Loading secondary location trackers..." 
+          id="travel-saved-card"
+          titleKey="card.savedDest"
+        />
+        <WeatherCard 
+          title="Flight Delays & Warnings" 
+          value="--" 
+          desc="Loading airport delay alerts..." 
+          id="travel-flight-card"
+          titleKey="card.flightDelays"
+        />
+        <WeatherCard 
+          title="Packing Advisor" 
+          value="--" 
+          desc="Loading smart luggage tips..." 
+          id="travel-packing-card"
+          titleKey="card.packingAdvisor"
+        />
+      </div>
+    </div>
+
+    <!-- Parents & Families Persona Grid -->
+    <div data-persona="family" class="persona-section hidden">
+      <div class="border-b border-hairline pb-2 sm:pb-3 mb-4 sm:mb-6">
+        <h2 class="text-lg sm:text-xl font-semibold text-ink tracking-apple-tight flex items-center gap-2">
+          <span>🎒</span> <span data-i18n="section.family.title">Parents & Families Planner</span>
+        </h2>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+        <WeatherCard 
+          title="School Commute Status" 
+          value="--" 
+          desc="Loading road safety index..." 
+          id="family-commute-card"
+          titleKey="card.schoolCommute"
+        />
+        <WeatherCard 
+          title="Rain Alerts Timeline" 
+          value="--" 
+          desc="Loading precipitation timing..." 
+          id="family-rain-card"
+          titleKey="card.rainAlerts"
+        />
+        <WeatherCard 
+          title="Severe Weather Bulletins" 
+          value="--" 
+          desc="Checking hazard warnings..." 
+          id="family-warning-card"
+          titleKey="card.severeWarnings"
+        />
+      </div>
+    </div>
+
+    <!-- Agriculture & Gardeners Persona Grid -->
+    <div data-persona="agriculture" class="persona-section hidden">
+      <div class="border-b border-hairline pb-2 sm:pb-3 mb-4 sm:mb-6">
+        <h2 class="text-lg sm:text-xl font-semibold text-ink tracking-apple-tight flex items-center gap-2">
+          <span>👩‍🌾</span> <span data-i18n="section.agriculture.title">Agriculture & Gardening Hub</span>
+        </h2>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+        <WeatherCard 
+          title="Soil Moisture" 
+          value="--" 
+          desc="Loading moisture percentages..." 
+          id="agri-moisture-card"
+          titleKey="card.soilMoisture"
+        />
+        <WeatherCard 
+          title="Rainfall Forecast" 
+          value="--" 
+          desc="Loading precipitation levels..." 
+          id="agri-rain-card"
+          titleKey="card.rainfallForecast"
+        />
+        <WeatherCard 
+          title="Frost Danger Index" 
+          value="--" 
+          desc="Checking temperature hazards..." 
+          id="agri-frost-card"
+          titleKey="card.frostDanger"
+        />
+        <WeatherCard 
+          title="Planting Guidance" 
+          value="--" 
+          desc="Loading seasonal sowing guide..." 
+          id="agri-planting-card"
+          titleKey="card.plantingGuide"
+        />
+      </div>
+    </div>
+
+    <!-- Commuters Persona Grid -->
+    <div data-persona="commute" class="persona-section hidden">
+      <div class="border-b border-hairline pb-2 sm:pb-3 mb-4 sm:mb-6">
+        <h2 class="text-lg sm:text-xl font-semibold text-ink tracking-apple-tight flex items-center gap-2">
+          <span>🚗</span> <span data-i18n="section.commute.title">Commuter Transit Guide</span>
+        </h2>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+        <WeatherCard 
+          title="Traffic Delays Index" 
+          value="--" 
+          desc="Loading congestion alerts..." 
+          id="commute-traffic-card"
+          titleKey="card.trafficIndex"
+        />
+        <WeatherCard 
+          title="Road Visibility Range" 
+          value="--" 
+          desc="Loading visibility index..." 
+          id="commute-visibility-card"
+          titleKey="card.visibility"
+        />
+        <WeatherCard 
+          title="Storm & Fog Alerts" 
+          value="--" 
+          desc="Checking severe travel warnings..." 
+          id="commute-storm-card"
+          titleKey="card.stormFog"
+        />
+      </div>
+    </div>
+
+    <!-- Event Planners Persona Grid -->
+    <div data-persona="event_planner" class="persona-section hidden">
+      <div class="border-b border-hairline pb-2 sm:pb-3 mb-4 sm:mb-6">
+        <h2 class="text-lg sm:text-xl font-semibold text-ink tracking-apple-tight flex items-center gap-2">
+          <span>📅</span> <span data-i18n="section.events.title">Event Planners Console</span>
+        </h2>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+        <WeatherCard 
+          title="Comfort Index Rating" 
+          value="--" 
+          desc="Loading ambient heat/humidity comfort..." 
+          id="events-comfort-card"
+          titleKey="card.comfortIndex"
+        />
+        <WeatherCard 
+          title="Precipitation Probability" 
+          value="--" 
+          desc="Loading probability percentage..." 
+          id="events-rain-card"
+          titleKey="card.precipitation"
+        />
+        <WeatherCard 
+          title="Outdoor Suitability" 
+          value="--" 
+          desc="Loading extended gather forecast..." 
+          id="events-suitability-card"
+          titleKey="card.outdoorSuitability"
+        />
+      </div>
+    </div>
+
+  </div>
+</div>
