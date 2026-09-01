@@ -19,7 +19,9 @@
     "tailwindcss": "^4.3.3"
   },
   "allowScripts": {
-    "esbuild": true
+    "esbuild": true,
+    "protobufjs": true,
+    "@google/genai": true
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
