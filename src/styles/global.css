@@ -55,7 +55,6 @@
   letter-spacing: -0.03em;
 }
 
-<<<<<<< HEAD
 /* ========== Responsive Foundation for Android WebView ========== */
 
 html {
@@ -107,8 +106,6 @@ img, video, svg {
   display: none;
 }
 
-=======
->>>>>>> 48afc383babc7d73b05edbb707fa98f758fde575
 /* Custom Scrollbar for premium feel */
 ::-webkit-scrollbar {
   width: 8px;
